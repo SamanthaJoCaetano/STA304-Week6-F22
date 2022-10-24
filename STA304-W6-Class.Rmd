@@ -179,11 +179,6 @@ library(car) # boxTidwell is in the car package
 boxTidwell(height_over180 ~ mass, data=my_data_clean)
 ```
 
-p-value = 0.48 is fairly large, meaning that we FTR H0 and the linearity assumption seems to be satisfied.
-
-Note: If the assumption was not satisfied, perhaps we can resolve this by including a polynomial term (e.g. mass^2) to account for the non-linearity.
-
-Additionally, the Hosmer and Lemeshow Test might be useful to evaluate whether the logistic regression model is well calibrated (by using a chi-squared test). We will not cover the Hosmer and Lemeshow Test in this class, but you are welcome to look into it on your own.
 
 ### Checking influential values
 
@@ -241,52 +236,34 @@ summary(lm(height ~ mass, data=my_data))$coefficients[,4]
 Now let's run this for all predictors:
 
 ```{r}
-summary(lm(height ~ mass, data=my_data))$coefficients[,4]
-summary(lm(height ~ hair_color, data=my_data))$coefficients[,4]
-summary(lm(height ~ skin_color, data=my_data))$coefficients[,4]
-summary(lm(height ~ eye_color, data=my_data))$coefficients[,4]
-summary(lm(height ~ birth_year, data=my_data))$coefficients[,4]
-summary(lm(height ~ sex, data=my_data))$coefficients[,4]
-summary(lm(height ~ gender, data=my_data))$coefficients[,4]
-summary(lm(height ~ homeworld, data=my_data))$coefficients[,4]
-summary(lm(height ~ species, data=my_data))$coefficients[,4]
+
 ```
 
-It gets quite messy with the 3+ categorical variables. Let's modify a bit, our pool of predictors maybe should be mass, birth_year, sex, gender.
 
 ```{r}
-summary(lm(height ~ mass, data=my_data))$coefficients[,4]
-summary(lm(height ~ birth_year, data=my_data))$coefficients[,4]
-summary(lm(height ~ sex, data=my_data))$coefficients[,4]
-summary(lm(height ~ gender, data=my_data))$coefficients[,4]
+
 ```
 
-Birth year has the smallest p-value so that is retained in the model.
+
 
 ### Second predictor
 
-Now, that we know birth year is retained in the model we need to see which (if any) of the remaining predictors mass, sex, and gender should be retained in the model.
+
 
 ```{r}
-summary(lm(height ~ birth_year + mass, data=my_data))$coefficients[,4]
-summary(lm(height ~ birth_year + sex, data=my_data))$coefficients[,4]
-summary(lm(height ~ birth_year + gender, data=my_data))$coefficients[,4]
+
 ```
 
-Mass seems like the next variable to inclue since it has the smallest p-value between the three models.
+
 
 ### Third predictor
 
-Now, that we know birth year and mass are retained in the model we need to see which (if any) of the remaining predictors sex, and gender should be retained in the model.
 
 ```{r}
-summary(lm(height ~ birth_year + mass + sex, data=my_data))$coefficients[,4]
-summary(lm(height ~ birth_year + mass + gender, data=my_data))$coefficients[,4]
+
 ```
 
-Note: gender is not significant, but two of the sex categories are. At this point, we probably should have made a rule about this beforehand. I am inclined to ignore the significant sex categories because the sample sizes of those categories are small and thus they should not have as much weight on our model. 
-
-Note, that this issue is common in stepwise selection and so it's best to decide beforehand what to do if some categories are significant, but others are not. An alternative model selection technique (like likelihood ratio tests, are more appropriate for handling these issues).  
+ 
 
 ### R Packages
 
@@ -302,29 +279,15 @@ Once you’ve settled on several possible models, you can use AIC to compare the
  
 ## Example
 
-I want to predict height from the following pool of predictors: mass, gender and birth year. There are 7 possible models to have:
+I want to predict height from the following pool of predictors: mass, gender and birth year. There are ? possible models to have:
 
-- mass
-- gender
-- birth year
-- mass + gender
-- mass + birthyear
-- gender + birthyear
-- mass + gender + birthyear
+???
 
-Let's use AIC to select which model to use. This might be easiest if we can grab the AIC from the model. Let's use `AIC(summary(model))` to do this.
+Let's use AIC to select which model to use. This might be easiest if we can grab the AIC from the model. Let's use `AIC(summary(model))`  to do this.
 
 ```{r}
-AIC(lm(height~mass, data=my_data))
-AIC(lm(height~gender, data=my_data))
-AIC(lm(height~birth_year, data=my_data))
-AIC(lm(height~mass+gender, data=my_data))
-AIC(lm(height~mass+birth_year, data=my_data))
-AIC(lm(height~gender+birth_year, data=my_data))
-AIC(lm(height~mass+gender+birth_year, data=my_data))
-```
 
-The lowest AIC is the `height~mass+birth_year` model. So that would be the selected model.
+```
 
 
 Note: this approach is similar to using the BIC, R-squared or R-squared adjusted criterion (but for R-squared adjusted we want to maximization.
