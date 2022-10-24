@@ -1,0 +1,37 @@
+---
+title: "Week 6 Class"
+author: "Samantha-Jo Caetano"
+date: "25/10/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Checking Model Assumptions
+
+Recall there are two different types of models that we have covered in STA304: linear regression and logistic regression. Previously we have also talked about how to use R to estimate these models via both Frequentist and Bayesian techniques. Below we will discuss how to check model assumptions for both linear and logistic regression.
+
+## Linear Regression
+
+
+
+## Logistic Regression
+
+
+
+\newpage 
+
+# Model Selection 
+
+# Forward Selection
+
+# AIC 
+
+
+
+\newpage 
+
+# Missing Data
+
